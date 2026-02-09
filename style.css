@@ -90,6 +90,23 @@ button:hover {
   box-shadow: 0 0 15px rgba(255,215,0,.8);
 }
 
+#adminToggleBtn {
+  margin-top: 8px;
+  background: #333;
+  color: gold;
+  border: 2px solid gold;
+}
+
+#adminToggleBtn:hover {
+  background: gold;
+  color: #000;
+}
+
+#adminToggleBtn.active {
+  background: gold;
+  color: #000;
+}
+
 #editBtn, #saveBtn {
   display: none;
   margin-top: 8px;

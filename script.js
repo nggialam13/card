@@ -11,23 +11,31 @@ const fields = [
   { label: "📸 Instagram", key: "instagram" },
 ];
 
-/* ====== INIT DATA (Không load từ localStorage) ====== */
+/* ====== INIT DATA (Load từ localStorage) ====== */
 function initData() {
   const container = document.getElementById("infoContainer");
   container.innerHTML = "";
 
   fields.forEach(f => {
+    const value = localStorage.getItem(f.key) || "";
     container.innerHTML += `
       <div class="info-item">
         <span>${f.label}</span>
-        <textarea disabled data-key="${f.key}"></textarea>
+        <textarea disabled data-key="${f.key}">${value}</textarea>
         <button onclick="copyText(this)">📋</button>
       </div>
     `;
   });
 
-  // Set default name
-  document.getElementById("fullName").innerText = "Nguyễn Gia Lâm";
+  // Load name từ localStorage hoặc dùng mặc định
+  const savedName = localStorage.getItem("fullName");
+  document.getElementById("fullName").innerText = savedName || "Nguyễn Gia Lâm";
+
+  // Load avatar
+  const avatar = localStorage.getItem("avatar");
+  if (avatar) {
+    document.getElementById("avatarImg").src = avatar;
+  }
 }
 
 /* ====== COPY ====== */
@@ -44,40 +52,20 @@ function showToast() {
   setTimeout(() => toast.style.display = "none", 1500);
 }
 
-/* ====== ADMIN HOTKEY (CTRL + SHIFT + A) ====== */
-document.addEventListener("keydown", e => {
-  if (e.ctrlKey && e.shiftKey && e.key === "A") {
-    isAdmin = !isAdmin;
-    if (isAdmin) {
-      loadSavedData();
-      showAdminButtons();
-      alert("Đã bật chế độ Admin");
-    } else {
-      hideAdminButtons();
-      disableEdit();
-      alert("Đã tắt chế độ Admin");
-    }
-  }
-});
-
-/* ====== LOAD SAVED DATA (Chỉ khi admin) ====== */
-function loadSavedData() {
-  // Load các textarea
-  document.querySelectorAll("textarea").forEach(t => {
-    const saved = localStorage.getItem(t.dataset.key);
-    if (saved) t.value = saved;
-  });
-
-  // Load tên
-  const savedName = localStorage.getItem("fullName");
-  if (savedName) {
-    document.getElementById("fullName").innerText = savedName;
-  }
-
-  // Load avatar
-  const avatar = localStorage.getItem("avatar");
-  if (avatar) {
-    document.getElementById("avatarImg").src = avatar;
+/* ====== TOGGLE ADMIN MODE ====== */
+function toggleAdmin() {
+  isAdmin = !isAdmin;
+  const adminBtn = document.getElementById("adminToggleBtn");
+  
+  if (isAdmin) {
+    showAdminButtons();
+    adminBtn.textContent = "🔓 Tắt Admin";
+    adminBtn.classList.add("active");
+  } else {
+    hideAdminButtons();
+    disableEdit();
+    adminBtn.textContent = "🔐 Admin";
+    adminBtn.classList.remove("active");
   }
 }
 
