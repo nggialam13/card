@@ -13,16 +13,31 @@ const fields = [
 
 /* ====== INIT DATA (Load từ data.json và localStorage) ====== */
 async function initData() {
-  let data = {};
+  let data = {
+    fullName: "Nguyễn Gia Lâm",
+    address1: "",
+    address2: "",
+    phone: "",
+    email: "",
+    facebook: "",
+    instagram: "",
+    avatar: ""
+  };
   
   // Thử load từ data.json
   try {
-    const response = await fetch('data.json');
+    const response = await fetch('./data.json?' + new Date().getTime());
     if (response.ok) {
-      data = await response.json();
+      const jsonData = await response.json();
+      // Merge dữ liệu từ data.json
+      Object.keys(jsonData).forEach(key => {
+        if (jsonData[key] !== null && jsonData[key] !== undefined && jsonData[key] !== "") {
+          data[key] = jsonData[key];
+        }
+      });
     }
   } catch (e) {
-    console.log('Không thể load data.json, sử dụng localStorage');
+    console.error('Không thể load data.json:', e);
   }
   
   // Ưu tiên localStorage nếu có (cho admin override)
