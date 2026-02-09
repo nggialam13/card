@@ -11,13 +11,44 @@ const fields = [
   { label: "📸 Instagram", key: "instagram" },
 ];
 
-/* ====== INIT DATA (Load từ localStorage) ====== */
-function initData() {
+/* ====== INIT DATA (Load từ data.json và localStorage) ====== */
+async function initData() {
+  let data = {};
+  
+  // Thử load từ data.json
+  try {
+    const response = await fetch('data.json');
+    if (response.ok) {
+      data = await response.json();
+    }
+  } catch (e) {
+    console.log('Không thể load data.json, sử dụng localStorage');
+  }
+  
+  // Ưu tiên localStorage nếu có (cho admin override)
+  fields.forEach(f => {
+    const localValue = localStorage.getItem(f.key);
+    if (localValue !== null && localValue !== "") {
+      data[f.key] = localValue;
+    }
+  });
+  
+  const localName = localStorage.getItem("fullName");
+  if (localName) {
+    data.fullName = localName;
+  }
+  
+  const localAvatar = localStorage.getItem("avatar");
+  if (localAvatar) {
+    data.avatar = localAvatar;
+  }
+
+  // Render UI
   const container = document.getElementById("infoContainer");
   container.innerHTML = "";
 
   fields.forEach(f => {
-    const value = localStorage.getItem(f.key) || "";
+    const value = data[f.key] || "";
     container.innerHTML += `
       <div class="info-item">
         <span>${f.label}</span>
@@ -27,14 +58,12 @@ function initData() {
     `;
   });
 
-  // Load name từ localStorage hoặc dùng mặc định
-  const savedName = localStorage.getItem("fullName");
-  document.getElementById("fullName").innerText = savedName || "Nguyễn Gia Lâm";
+  // Set name
+  document.getElementById("fullName").innerText = data.fullName || "Nguyễn Gia Lâm";
 
-  // Load avatar
-  const avatar = localStorage.getItem("avatar");
-  if (avatar) {
-    document.getElementById("avatarImg").src = avatar;
+  // Set avatar
+  if (data.avatar) {
+    document.getElementById("avatarImg").src = data.avatar;
   }
 }
 
