@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Trang Cá Nhân | Gia Lâm</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="card">
+
+  <!-- LEFT -->
+  <div class="left">
+    <div class="avatar-box">
+      <img id="avatarImg" src="" alt="avatar">
+      <!-- Upload chỉ hiện khi là admin -->
+      <label class="avatar-upload">
+        📷
+        <input type="file" accept="image/*">
+      </label>
+    </div>
+
+    <h1 id="fullName" contenteditable="false">Nguyễn Gia Lâm</h1>
+
+    <button id="saveBtn" onclick="saveData()">💾 Lưu</button>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right" id="infoContainer"></div>
+
+  <p class="note">Người xem chỉ có thể sao chép thông tin</p>
+</div>
+
+<!-- LOGIN POPUP -->
+<div id="loginPopup" class="popup">
+  <div class="popup-content">
+    <h3>Admin Login</h3>
+    <input id="adminPass" type="password" placeholder="Mật khẩu">
+    <button onclick="login()">Đăng nhập</button>
+    <button class="close" onclick="closeLogin()">✖</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast">Đã sao chép ✔</div>
+
+<script src="script.js"></script>
+</body>
+</html>
