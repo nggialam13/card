@@ -90,8 +90,20 @@ button:hover {
   box-shadow: 0 0 15px rgba(255,215,0,.8);
 }
 
-#saveBtn {
+#editBtn, #saveBtn {
   display: none;
+  margin-top: 8px;
+}
+
+#editBtn {
+  background: #333;
+  color: gold;
+  border: 2px solid gold;
+}
+
+#editBtn:hover {
+  background: gold;
+  color: #000;
 }
 
 /* RIGHT */

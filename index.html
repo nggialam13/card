@@ -22,24 +22,15 @@
     </div>
 
     <h1 id="fullName" contenteditable="false">Nguyễn Gia Lâm</h1>
-
-    <button id="saveBtn" onclick="saveData()">💾 Lưu</button>
+    
+    <button id="editBtn" onclick="enableEdit()" style="display: none;">✏️ Sửa</button>
+    <button id="saveBtn" onclick="saveData()" style="display: none;">💾 Lưu</button>
   </div>
 
   <!-- RIGHT -->
   <div class="right" id="infoContainer"></div>
 
   <p class="note">Người xem chỉ có thể sao chép thông tin</p>
-</div>
-
-<!-- LOGIN POPUP -->
-<div id="loginPopup" class="popup">
-  <div class="popup-content">
-    <h3>Admin Login</h3>
-    <input id="adminPass" type="password" placeholder="Mật khẩu">
-    <button onclick="login()">Đăng nhập</button>
-    <button class="close" onclick="closeLogin()">✖</button>
-  </div>
 </div>
 
 <!-- TOAST -->
